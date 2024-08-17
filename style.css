@@ -1,0 +1,324 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+body{
+    height: 100%;
+}
+
+li {
+    list-style: none;
+    padding-left: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.hidden {
+    display: none;
+}
+
+.highlight{
+    color: #1078D4;
+    font-weight: bold;
+}
+
+/* 헤더 영역 */
+.header_area{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    z-index: 10;
+}
+
+header{
+    width: 1440px;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    width: 200PX;
+    height: 85px;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.logo img{
+    width: 100%;
+    height: 100%;
+}
+
+.logo:hover{
+    cursor: pointer;
+}
+
+nav{
+    width: 1000px;
+    height: 100px;
+}
+
+.main_menu{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main_menu > li{
+    position: relative;
+    padding: 0 40px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 24px;
+}
+
+.main_menu > li:hover{
+    font-weight: bold;
+}
+
+.main_menu > li:hover .sub_menu{
+    height: 180px;
+}
+
+.sub_menu{
+    transition: all 0.5s;
+    position: absolute;
+    width: 260px;
+    height: 0;
+    overflow: hidden;
+    text-align: left;
+    background-color: #fff;
+    font-weight: 100;
+    z-index: 2;
+    padding-left: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+.sub_menu01{
+    margin-left: -30px;
+}
+
+.sub_menu02{
+    margin-left: -20px;
+}
+
+.sub_menu li{
+    width: 260px;
+    line-height: 60px;
+}
+
+.sub_menu li:hover{
+    font-weight: bold;
+}
+
+.sgin_btn{
+    width: 210px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login_btn{
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    font-size: 20px;
+    color: #888;
+}
+
+.login_btn i{
+    margin-top: 20px;
+}
+
+.login_btn:hover, .join_btn:hover{
+    cursor: pointer;
+    color: #111;
+}
+
+.join_btn{
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    font-size: 20px;
+    color: #888;
+}
+
+.join_btn i{
+    margin-top: 20px;
+}
+/* 헤더 영역 */
+/* 퀴즈 이벤트 참가 영역 */
+.event_area{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.event{
+    width: 1280px;
+}
+
+.btn_area{
+    position: relative;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.btn_area select {
+    padding: 5px 10px;
+    margin:  5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.quiz-start{
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #1078D4;
+    border: 1px solid #1078D4;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+}
+
+.select-file {
+    font-size: 16px;
+    margin: 5px;
+}
+
+.coupon{
+    position: absolute;
+    right: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: #1078D4;
+    border: 1px solid #1078D4;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+}
+
+/* 쿠폰 발급 모달 */
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    display: none;
+}
+
+.box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 300px;
+    background-color: #fff;
+}
+
+.close-btn{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    background-color: #111;
+    color: #fff;
+}
+
+.box h1{
+    text-align: center;
+    line-height: 150px;
+}
+
+.box input{
+    width: 340px;
+    height: 40px;
+    padding-left: 10px;
+    margin-left: 25px;
+    font-size: 16px;
+}
+
+.submit{
+    width: 340px;
+    height: 40px;
+    margin-top: 10px;
+    margin-left: 25px;
+    background-color: #1078D4;
+    color: #fff;
+    font-size: 16px;
+}
+/* 쿠폰 발급 모달 */
+/* 퀴즈 이벤트 참가 영역 */
+/* 푸터 영역 */
+.footer_area{
+    width: 100%;
+    height: 100px;
+    background-color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+footer{
+    width: 1440px;
+    height: 100px;
+    display: flex;
+    color: #555;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer_logo{
+    width: 200px;
+    height: 85px;
+    display: flex;
+    align-items: center;
+}
+.footer_logo img{
+    filter: grayscale(100%);
+}
+
+.copy{
+    font-size: 20px;
+}
+
+.sns{
+    width: 180px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sns i{
+    font-size: 44px;
+}
+/* 푸터 영역 */
