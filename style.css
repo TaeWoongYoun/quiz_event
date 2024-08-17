@@ -275,6 +275,10 @@ nav{
     color: #fff;
     font-size: 16px;
 }
+
+.show-modal{
+    display: block;
+}
 /* 쿠폰 발급 모달 */
 /* 퀴즈 박스 */
 #canvas, #coupon-image{
@@ -367,7 +371,11 @@ nav{
     line-height: 30px;
 }
 
-.complate-way{
+.complete-way{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 35px;
     color: #fff;
     background-color: #1078D4;
     border: 2px solid #fff;
