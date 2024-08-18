@@ -3,12 +3,12 @@ let locationIndex = 0; // locationIndex를 기본 값으로 초기화
 
 // JSON 파일을 비동기로 불러오기
 fetch('quiz.json')
-  .then(response => response.json())
-  .then(data => {
+    .then(response => response.json())
+    .then(data => {
     question = data;
     initMap(); // 맵 초기화 함수 호출
     window.addEventListener('DOMContentLoaded', eventChange); // 맵이 로드되면 eventChange 호출
-  });
+});
 
 // 쿠폰 발급 모달창
 const openCoupon = document.querySelector('.coupon');
@@ -167,10 +167,8 @@ const loadQuestion = function() {
       }
 
       if (currentIndex === question[locationIndex].quiz.length) {
-        resultBox.textContent = '축하합니다! 해당 코스 퀴즈풀이가 완료되었습니다!';
         completedCourse[selectedCourse] = true;
         completedCourse.push(selectedCourse);
-        updateStamp();
       }
 
       resultBox.style.display = 'block';
@@ -193,7 +191,7 @@ const loadQuestion = function() {
 
         resultBox.style.display = 'none';
         quizBox.style.display = 'block';
-      }, 2000);
+      }, 1000);
     });
   });
 };
@@ -208,21 +206,6 @@ const initMap = function() {
   switch(selectedCourse) {
     case '창덕궁':
       mapImage.src = 'map/창덕궁.png';
-      locationIndex = 0;
-      break;
-
-    case '경복궁':
-      mapImage.src = 'map/경복궁.png';
-      locationIndex = 1;
-      break;
-
-    case '신라':
-      mapImage.src = 'map/신라.png';
-      locationIndex = 2;
-      break;
-
-    default:
-      mapImage.src = 'map/창덕궁.png'; // 기본값 설정
       locationIndex = 0;
       break;
   }
@@ -262,54 +245,58 @@ locationSelect.addEventListener('change', function() {
   eventChange();
 });
 
-// 해당 코스 완료 후 이미지 업데이트
-const updateStamp = function() {
-  const imgCanvas = canvas.getContext('2d');
-  const stamp = new Image();
-  stamp.src = 'coupon/stamp_card.png';
-  image.src = couponImage.src;
+// 지도 위에 경로 표시
+// 지도 위에 경로 표시 및 경유지 연결
+const map = document.querySelector('.map');
+const pathCanvas = document.createElement('canvas');
+map.appendChild(pathCanvas);
 
-  image.onload = function() {
-    canvas.width = image.width;
-    canvas.height = image.height;
-
-    imgCanvas.drawImage(image, 0, 0);
-
-    imgCanvas.fillStyle = 'black';
-    imgCanvas.textAlign = 'left';
-    imgCanvas.fillText(inputName, canvas.width - 185, canvas.height - 305);
-    imgCanvas.fillText(today, canvas.width - 185, canvas.height - 355);
-
-    stamp.onload = function() {
-      imgCanvas.drawImage(stamp, 55, 165);
-
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png');
-      link.download = 'stamp_card.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    };
-  };
+// 캔버스 크기 및 위치 설정
+const setCanvasSize = () => {
+  Object.assign(pathCanvas, {
+    width: map.offsetWidth,
+    height: map.offsetHeight,
+    style: "position: absolute; left: -15px; top: -15px;"
+  });
 };
 
-// 지도 위에 경로 표시
-const map = document.querySelector('.map');
+// 경유지 연결 선 그리기
+const drawPaths = waypoints => {
+  const ctx = pathCanvas.getContext('2d');
+  ctx.clearRect(0, 0, pathCanvas.width, pathCanvas.height);
 
-const eventChange = function() {
-  question[locationIndex].quiz.forEach(function(ping) {
+  if (waypoints.length > 1) {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    waypoints.forEach((wp, i) => {
+      const [x, y] = [
+        wp.offsetLeft + wp.offsetWidth / 2,
+        wp.offsetTop + wp.offsetHeight / 2
+      ];
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  }
+};
+
+// 경유지 및 경로 초기화 및 업데이트
+const eventChange = () => {
+  const selectedCourse = locationSelect.value;
+  const waypoints = question[locationIndex].quiz.map(ping => {
     const way = document.createElement('div');
-    const selectedCourse = locationSelect.value;
-
     way.className = 'waypoint';
-    way.style.left = ping.location[0] + 'px';
-    way.style.top = ping.location[1] + 'px';
+    Object.assign(way.style, {
+      position: 'absolute',
+      left: `${ping.location[0]}px`,
+      top: `${ping.location[1]}px`
+    });
     way.innerHTML = ping.idx;
-
+    if (completedCourse[selectedCourse]) way.classList.add("complete-way");
     map.appendChild(way);
-
-    if (completedCourse[selectedCourse]) {
-      way.classList.add("complete-way");
-    }
+    return way;
   });
+
+  setCanvasSize();
+  drawPaths(waypoints);
 };
