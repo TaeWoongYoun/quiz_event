@@ -33,8 +33,6 @@ document.querySelector('.submit').addEventListener('click', () => {
         document.getElementById('canvas').width = image.width;
         document.getElementById('canvas').height = image.height;
         ctx.drawImage(image, 0, 0);
-        ctx.fillStyle = 'black';
-        ctx.textAlign = 'left';
         ctx.fillText(document.getElementById('name').value, canvas.width - 185, canvas.height - 305);
         ctx.fillText(new Date().toISOString().split('T')[0], canvas.width - 185, canvas.height - 355);
         
